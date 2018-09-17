@@ -1,0 +1,22 @@
+#-----------------------------------------------------------
+# Vivado v2017.2.1 (64-bit)
+# SW Build 1957588 on Wed Aug  9 16:32:10 MDT 2017
+# IP Build 1948039 on Wed Aug  9 18:19:28 MDT 2017
+# Start of session at: Fri Jul 13 14:48:43 2018
+# Process ID: 3030
+# Current directory: /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files
+# Command line: vivado
+# Log file: /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/vivado.log
+# Journal file: /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_hw
+connect_hw_server
+open_hw_target
+current_hw_device [get_hw_devices xcvu9p_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xcvu9p_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xcvu9p_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xcvu9p_0]
+set_property PROGRAM.FILE {/home/xinheng/Desktop/graphChallenge/Host/design_1_wrapper.bit} [get_hw_devices xcvu9p_0]
+program_hw_devices [get_hw_devices xcvu9p_0]
+refresh_hw_device [lindex [get_hw_devices xcvu9p_0] 0]

@@ -1,0 +1,44 @@
+#-----------------------------------------------------------
+# Vivado v2017.2.1 (64-bit)
+# SW Build 1957588 on Wed Aug  9 16:32:10 MDT 2017
+# IP Build 1948039 on Wed Aug  9 18:19:28 MDT 2017
+# Start of session at: Fri Jul 13 14:08:36 2018
+# Process ID: 3823
+# Current directory: /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/tests
+# Command line: vivado
+# Log file: /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/tests/vivado.log
+# Journal file: /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/tests/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_hw
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.2/data/ip'.
+open_hw: Time (s): cpu = 00:00:11 ; elapsed = 00:00:06 . Memory (MB): peak = 6031.000 ; gain = 126.500 ; free physical = 20752 ; free virtual = 46841
+connect_hw_server
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2017.2.1
+  **** Build date : Aug  9 2017-16:39:25
+    ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+
+
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210308A1C873
+current_hw_device [get_hw_devices xcvu9p_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xcvu9p_0] 0]
+INFO: [Labtools 27-2302] Device xcvu9p (JTAG device index = 0) is programmed with a design that has 1 MIG core(s).
+set_property PROBES.FILE {} [get_hw_devices xcvu9p_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xcvu9p_0]
+set_property PROGRAM.FILE {/home/xinheng/Desktop/graphChallenge/design_1_wrapper.bit} [get_hw_devices xcvu9p_0]
+program_hw_devices [get_hw_devices xcvu9p_0]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+program_hw_devices: Time (s): cpu = 00:00:48 ; elapsed = 00:00:46 . Memory (MB): peak = 6238.211 ; gain = 0.000 ; free physical = 20491 ; free virtual = 46668
+refresh_hw_device [lindex [get_hw_devices xcvu9p_0] 0]
+WARNING: [Labtools 27-3089] Calibration is still in-progress.
+INFO: [Labtools 27-2302] Device xcvu9p (JTAG device index = 0) is programmed with a design that has 1 MIG core(s).
+INFO: [Labtools 27-3143] Calibration status change detected, refreshing MIG_1
+exit
+INFO: [Common 17-206] Exiting Vivado at Fri Jul 13 14:22:09 2018...

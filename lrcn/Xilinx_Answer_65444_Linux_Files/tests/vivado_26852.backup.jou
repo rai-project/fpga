@@ -1,0 +1,22 @@
+#-----------------------------------------------------------
+# Vivado v2017.2.1 (64-bit)
+# SW Build 1957588 on Wed Aug  9 16:32:10 MDT 2017
+# IP Build 1948039 on Wed Aug  9 18:19:28 MDT 2017
+# Start of session at: Sun Jul  1 12:07:14 2018
+# Process ID: 26852
+# Current directory: /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/tests
+# Command line: vivado
+# Log file: /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/tests/vivado.log
+# Journal file: /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/tests/vivado.jou
+#-----------------------------------------------------------
+start_gui
+create_project project_1 /home/xinheng/Desktop/project_1 -part xcvu9p-flga2104-2L-e-es1
+set_property board_part xilinx.com:vcu118:part0:1.1 [current_project]
+close_project
+open_project /home/xinheng/Desktop/PCIE_stream/project_1/project_1.xpr
+update_compile_order -fileset sources_1
+open_bd_design {/home/xinheng/Desktop/PCIE_stream/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+close_project
+open_project /home/xinheng/Desktop/new/DSP2_1024_vgg16/project_1/project_1.xpr
+open_bd_design {/home/xinheng/Desktop/new/DSP2_1024_vgg16/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+update_compile_order -fileset sources_1

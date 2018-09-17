@@ -1,0 +1,100 @@
+#define _BSD_SOURCE
+#define _XOPEN_SOURCE 500
+#include <assert.h>
+#include <fcntl.h>
+#include <getopt.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <time.h>
+
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include "ap_int.h"
+
+#define DBUF_IN_SIZE 1117012
+#define DBUF_OUT_SIZE 1
+#define DBUF_SIZE (DBUF_IN_SIZE + DBUF_OUT_SIZE)
+
+#define DATA_ADDR 0x0
+#define GPIO_IN_ADDR 0x40000000
+#define GPIO_OUT_ADDR 0x40000008
+
+#define DEBUG 1
+
+#define MAGIC_CLR 0x00
+#define MAGIC_START 0xAA
+#define MAGIC_DONE 0x03
+
+int main() {
+
+  int from_fpga_fd = open("/dev/xdma0_c2h_0", O_RDWR | O_NONBLOCK);
+  int to_fpga_fd= open("/dev/xdma0_h2c_0", O_RDWR);
+
+ap_int<512> temp;
+ap_int<32> times=1;
+ap_int<32> col=1;
+ap_int<32> row=1;
+ap_int<32> base=0;
+
+int length=times*col*(1+row*2)+1;
+
+
+
+ap_int<512> *stream_in= (ap_int<512> *) calloc(sizeof(ap_int<512>),length);
+  
+  if(from_fpga_fd<0 || to_fpga_fd<0) {
+    puts("device not found");
+    exit(0);
+  }
+
+	stream_in[0].range(31,0)=times.range(31,0);
+	stream_in[0].range(63,32)=col.range(31,0);
+	stream_in[0].range(95,64)=row.range(31,0);
+	stream_in[0].range(111,96)=base.range(31,0);
+
+
+
+
+puts("writing input start");
+for(int i=0;i<length;i++)
+{
+puts("writing input start");
+	printf("%d\n",i);
+	write(to_fpga_fd, &stream_in[length], sizeof(ap_int<512>));
+puts("writing input done");
+}
+
+
+
+read(from_fpga_fd, stream_in, col*row*4*sizeof(ap_int<512> ));
+puts("reading input done");
+
+
+for(int i=0;i<col;i++)
+{
+
+	times.range(31,0)=stream_in[i].range(511,480);
+	printf("%x ", (int)times);
+	times.range(31,0)=stream_in[i].range(479,448);
+	printf("%x ", (int)times);
+	times.range(31,0)=stream_in[i].range(447,416);
+	printf("%x ", (int)times);
+	times.range(31,0)=stream_in[i].range(415,384);
+	printf("%x ", (int)times);
+	times.range(31,0)=stream_in[i].range(383,352);
+	printf("%x\n", (int)times);
+}
+
+free(stream_in);
+
+close(from_fpga_fd);
+close(to_fpga_fd);
+
+}
+

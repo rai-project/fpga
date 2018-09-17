@@ -1,0 +1,1 @@
+cmd_/home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/driver/xdma.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/driver/xdma.ko /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/driver/xdma.o /home/xinheng/Desktop/Xilinx_Answer_65444_Linux_Files/driver/xdma.mod.o
