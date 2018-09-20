@@ -4,7 +4,7 @@ CFLAGS=-g -std=c++11
 all: test
 
 test: lrcn_host.o fpga_version.o
-	$(CC) $(CFLAGS) lrcn_host.o fpga_version.o -I include -o test 
+	$(CC) $(CFLAGS) lrcn_host.o fpga_version.o -I include -o test -DUSING_MAIN=1
 
 lrcn_host.o: lrcn_host.cpp fpga_version.h
 	$(CC) $(CFLAGS) -c lrcn_host.cpp -I include

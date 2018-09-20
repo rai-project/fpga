@@ -1,32 +1,32 @@
+
+#ifdef USING_MAIN
+
 #include "fpga_version.h"
 
+int main() {
 
-int main()
-{
+  auto t_start = std::chrono::high_resolution_clock::now();
 
-    auto t_start = std::chrono::high_resolution_clock::now();    
+  PredictorContext pred = NewFPGAPredictor("reorderdata_for_maxDSP_small_diffQ.bin");
 
-    
-    Predictor* pred = Newfpga("reorderdata_for_maxDSP_small_diffQ.bin");
+  auto t_2 = std::chrono::high_resolution_clock::now();
 
-    auto t_2 = std::chrono::high_resolution_clock::now();
-    
-    const int * idx = Predictfpga(pred);
+  const int *idx = PredictFPGA(pred);
 
+  auto t_3 = std::chrono::high_resolution_clock::now();
+  DeleteFPGAPredictor(pred);
 
-    auto t_3 = std::chrono::high_resolution_clock::now();
-    Deletefpga(pred);
-   
-   for(int j=0;j<15;j++)
-   {
-       printf("%d\n",idx[j]);
-   }
-   delete idx;
-    
-    std::chrono::duration<double> data_prepare = t_2 - t_start; 
-    std::chrono::duration<double> kernel_exec = t_3 - t_2; 
-    std::cout << "Preprocessing: " << data_prepare.count() << "s" << std::endl;
-    std::cout << "Kernel exec time: " << kernel_exec.count() << "s" << std::endl;
+  for (int j = 0; j < 15; j++) {
+    printf("%d\n", idx[j]);
+  }
+  delete idx;
 
-    return 0;
+  std::chrono::duration<double> data_prepare = t_2 - t_start;
+  std::chrono::duration<double> kernel_exec  = t_3 - t_2;
+  std::cout << "Preprocessing: " << data_prepare.count() << "s" << std::endl;
+  std::cout << "Kernel exec time: " << kernel_exec.count() << "s" << std::endl;
+
+  return 0;
 }
+
+#endif // USING_MAIN
