@@ -8,16 +8,20 @@ int main()
     fin = fopen("vocabulary.txt", "r");
     int i,j;
 
-    char** dictionary = new char[8800][50];
-    i =0;
+    char** dictionary = new char*[8800];
+    for(i =0 ; i< 8800; i++){
+	dictionary[i] = new char[50];
+    }
+    
     for(i = 0; i < 8800; i++){ //clear dictionary
       for(j = 0; j< 50; j++){
         dictionary[i][j]=0; 
       }
     }
+    i =0;
     while (fgets(dictionary[i],50,fin)!=NULL){
         i++;
-        if(i >= n_words_src)
+        if(i >= 8800)
             break;
     }
     fclose(fin);
@@ -29,24 +33,27 @@ int main()
 
     auto t_2 = std::chrono::high_resolution_clock::now();
     
-    int * idx = Predictfpga(pred,"./image/boat.bin");
+    int * idx = Predictfpga(pred,"./image/clocktower.bin");
 
     auto t_3 = std::chrono::high_resolution_clock::now();
    
-    printf("boat: \n");
+   printf("clocktower: \n");
    for(int j=0;j<15;j++)
    {
-       printf("%s ",dictionary[idx[j]]);
+       printf("%s ",dictionary[idx[j]-1]);
    }
 
    idx = Predictfpga(pred,"./image/broccoli.bin");
    printf("broccoli: \n");
    for(int j=0;j<15;j++)
    {
-       printf("%s ",dictionary[idx[j]]);
+       printf("%d %s ",idx[j],dictionary[idx[j]-1]);
    }
    delete idx;
-
+   for(i =0 ; i< 8800; i++){
+	delete dictionary[i];
+    }
+    delete dictionary;
     
     std::chrono::duration<double> data_prepare = t_2 - t_start; 
     std::chrono::duration<double> kernel_exec = t_3 - t_2; 

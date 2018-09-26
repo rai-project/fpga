@@ -38,6 +38,6 @@ public:
 Predictor* Newfpga(const char input_file[]);
 void Deletefpga(Predictor* pred);
 
-const int *Predictfpga(Predictor* pred) ;
+int *Predictfpga(Predictor* pred, const char input_image[]) ;
 
 #endif

@@ -59,7 +59,7 @@ void Deletefpga(Predictor* pred) {
   delete predictor;
 }
 
-const int *Predictfpga(Predictor* pred, const char input_image[]) {
+int *Predictfpga(Predictor* pred, const char input_image[]) {
 
   auto predictor = (Predictor *)pred;
 
@@ -74,8 +74,10 @@ const int *Predictfpga(Predictor* pred, const char input_image[]) {
   fin = fopen( input_image , "rb");
   float image[3][227][227];
   int index =0;
-  ap_fixed<512> reorder_data[5448];
+  ap_int<512>* reorder_data = new ap_int<512>[5448];
   ap_fixed <16,9,AP_TRN_ZERO,AP_SAT> image_fx[3][227][227];
+  
+  //ap_fixed <16> image_fx[3][227][227];
   for(int c = 0; c < 3; ++c){
     for(int h = 0; h < 227; ++h){
       fread(image[c][h], sizeof(float), 227, fin);
@@ -83,9 +85,10 @@ const int *Predictfpga(Predictor* pred, const char input_image[]) {
                image_fx[c][h][i] = image[c][h][i];
             }
     }
-    }
+  }
   fclose(fin);
-    //verification
+  
+  //verification
     for(int c = 0; c < 3; ++c){
         for(int h = 0; h < 227; ++h){
             for (int i = 0; i < 227; ++i){
@@ -108,8 +111,8 @@ const int *Predictfpga(Predictor* pred, const char input_image[]) {
         }
     }
 
-    lseek(to_fpga_fd, DATA_ADDR, SEEK_SET);
-    write(to_fpga_fd, reorder_data, (5448) * sizeof(ap_int <16>));
+    lseek(pred->to_fpga_fd_, DATA_ADDR, SEEK_SET);
+    write(pred->to_fpga_fd_, reorder_data, 5448 * sizeof(ap_int<512>));
   /*****load image finished *****/
 
   /***launch HLS ***/
@@ -131,10 +134,10 @@ const int *Predictfpga(Predictor* pred, const char input_image[]) {
   puts("end!");
 
 
-  ap_int <512> data_out[1];
+  ap_int <512> data_out[16];
   puts("test after hls");
   lseek(predictor->from_fpga_fd_,  DATA_ADDR+sizeof(ap_int<512>)*301050, SEEK_SET);
-  read(predictor->from_fpga_fd_, &data_out,  512/32* sizeof(int));
+  read(predictor->from_fpga_fd_, &data_out,  sizeof(ap_int<512>));
   
   ap_int<32> num;
   int idx;
