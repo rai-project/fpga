@@ -21,13 +21,9 @@ type Predictor struct {
 
 func New(opts0 ...options.Option) (*Predictor, error) {
 	opts := options.New(opts0...)
-	inputFile := string(opts.Graph())
+	inputFile := "reorderdata_for_maxDSP_small_diffQ.bin"
 	if !com.IsFile(inputFile) {
 		return nil, errors.Errorf("file %s not found", inputFile)
-	}
-
-	if opts.OutputNode() == "" {
-		return nil, errors.Errorf("expecting a valid (non-empty) output node name")
 	}
 
 	inputFileString := C.CString(inputFile)
@@ -49,24 +45,7 @@ func prod(arry []uint32) int64 {
 	return accum
 }
 
-func (p *Predictor) Predict(inputLayerName0 string, outputLayerName0 string, input []float32, shape []uint32) (Predictions, error) {
-	// log.WithField("input_layer_name", inputLayerName0).
-	// 	WithField("output_layer_name", outputLayerName0).
-	// 	Info("performing fpga prediction")
-
-	if inputLayerName0 == "" {
-		return nil, errors.New("expecting a valid (non-empty) input layer name")
-	}
-
-	if outputLayerName0 == "" {
-		return nil, errors.New("expecting a valid (non-empty) output layer name")
-	}
-
-	inputLayerName := C.CString(inputLayerName0)
-	defer C.free(unsafe.Pointer(inputLayerName))
-
-	outputLayerName := C.CString(outputLayerName0)
-	defer C.free(unsafe.Pointer(outputLayerName))
+func (p *Predictor) Predict(input []float32) (Predictions, error) {
 
 	batchSize := int64(p.options.BatchSize())
 	shapeLen := prod(shape)
